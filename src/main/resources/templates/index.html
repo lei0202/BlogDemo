@@ -11,7 +11,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="#">
-        <img src="../static/image/bootstrap.svg" alt="" width="32" height="32" title="Bootstrap">
+        <img src="/image/bootstrap.svg" alt="" width="32" height="32" title="Bootstrap">
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -21,12 +21,8 @@
             <li class="nav-item active">
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=35c4a4d61c5614daa6cf&redirect_uri=http://localhost:8888/callback&scope=user&state=1">登录</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    我
+            <li class="nav-item dropdown" th:if="${session.githubUser != null}">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" th:text="${session.githubUser.getName()}">
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="#">Action</a>
@@ -34,6 +30,9 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Something else here</a>
                 </div>
+            </li>
+            <li class="nav-item" th:if="not ${session.githubUser != null}">
+                <a class="nav-link" href="https://github.com/login/oauth/authorize?client_id=35c4a4d61c5614daa6cf&redirect_uri=http://localhost:8888/callback&scope=user&state=1">登录</a>
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
