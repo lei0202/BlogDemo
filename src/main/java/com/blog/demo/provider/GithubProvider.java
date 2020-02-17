@@ -25,7 +25,12 @@ public class GithubProvider {
 
                 String string = response.body().string();
                 System.out.println(string);
-                return string;
+                String[] split = string.split("&");
+                String s = split[0];
+                String[] split1 = s.split("=");
+                String s1 = split1[1];
+                System.out.println(s1);
+                return s1;
             } catch (IOException e) {
                 e.printStackTrace();
             }
