@@ -4,8 +4,7 @@ import com.blog.demo.dto.AccessTokenDTO;
 import com.blog.demo.mapper.UserMapper;
 import com.blog.demo.model.User;
 import com.blog.demo.provider.GithubProvider;
-import com.blog.demo.provider.GithubUser;
-import okhttp3.Response;
+import com.blog.demo.dto.GithubUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -50,7 +49,7 @@ public class AuthController {
         accessTokenDTO.setClient_secret(clientSecret);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if(githubUser!=null) {
+        if(githubUser!=null && githubUser.getId() !=null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);
@@ -58,6 +57,7 @@ public class AuthController {
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setGmtCreate(System.currentTimeMillis());
             user.setGmtModified(user.getGmtCreate());
+            user.setAvatar_url(githubUser.getAvatar_url());
             userMapper.insert(user);
             Cookie cookie= new Cookie("token", token);
             response.addCookie(cookie);

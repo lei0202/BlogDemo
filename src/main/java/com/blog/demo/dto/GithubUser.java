@@ -1,4 +1,4 @@
-package com.blog.demo.provider;
+package com.blog.demo.dto;
 
 
 import lombok.Getter;
@@ -11,5 +11,5 @@ public class GithubUser {
     private String login;
     private String name;
     private Long id;
-
+    private String avatar_url;
 }

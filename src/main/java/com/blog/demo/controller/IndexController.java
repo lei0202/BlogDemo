@@ -1,6 +1,8 @@
 package com.blog.demo.controller;
 
+import com.blog.demo.mapper.QuestionMapper;
 import com.blog.demo.mapper.UserMapper;
+import com.blog.demo.model.Question;
 import com.blog.demo.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -18,10 +20,15 @@ public class IndexController {
     @SuppressWarnings("all")
     @Autowired
     private UserMapper userMapper;
+    @SuppressWarnings("all")
+    @Autowired
+    private QuestionMapper questionMapper;
 
     @GetMapping("/")
-    public String getIndex(HttpServletRequest request) {
+    public String getIndex(HttpServletRequest request,
+                           Model model) {
         Cookie[] cookies = request.getCookies();
+        if(cookies!=null || cookies.length!=0)
         for (Cookie c: cookies
              ) {
             if(c.getName().equals("token")){
@@ -35,6 +42,8 @@ public class IndexController {
             }
         }
 
+        List<Question> questions = questionMapper.list();
+        model.addAttribute("questions",questions);
         return "index";
     }
 }
