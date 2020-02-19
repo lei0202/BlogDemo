@@ -77,13 +77,14 @@
                     </ul>
                 </nav>
             </div>
-            <span aria-hidden="true">
+            <span aria-hidden="true" th:each="question : ${questions}">
                 <hr>
                 <div class="media shadow-sm p-3 mb-5 bg-white rounded border border-secondary">
-                    <img src="https://cn.bing.com/th?id=OIP.6VS5icuhTaIzl9a-aguqDAHaHa&pid=Api&rs=1" style="width: 70px" class="align-self-center mr-3" alt="...">
+                    <img th:src="${question.getUser().getAvatar_url()}" style="width: 70px" class="align-self-center mr-3" alt="...">
                         <div class="media-body">
-                            <h5 class="mt-0">Center-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            <h5 class="mt-0" th:text="${question.getTitle()}"></h5>
+                            <span th:text="${question.getDescription()}"></span>
+                            <p><span th:text="${question.getCommentCount()}"></span>个回复·<span th:text="${question.getViewCount()}"></span> 次阅读·<span th:text="${#dates.format(question.getGmtModified(),'dd MMMM yyyy')}"></span></p>
                         </div>
                 </div>
             </span>

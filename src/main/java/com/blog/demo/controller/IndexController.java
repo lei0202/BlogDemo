@@ -1,9 +1,11 @@
 package com.blog.demo.controller;
 
+import com.blog.demo.dto.QuestionDTO;
 import com.blog.demo.mapper.QuestionMapper;
 import com.blog.demo.mapper.UserMapper;
 import com.blog.demo.model.Question;
 import com.blog.demo.model.User;
+import com.blog.demo.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +22,8 @@ public class IndexController {
     @SuppressWarnings("all")
     @Autowired
     private UserMapper userMapper;
-    @SuppressWarnings("all")
     @Autowired
-    private QuestionMapper questionMapper;
+    private QuestionService questionService;
 
     @GetMapping("/")
     public String getIndex(HttpServletRequest request,
@@ -42,7 +43,7 @@ public class IndexController {
             }
         }
 
-        List<Question> questions = questionMapper.list();
+        List<QuestionDTO> questions = questionService.list();
         model.addAttribute("questions",questions);
         return "index";
     }
