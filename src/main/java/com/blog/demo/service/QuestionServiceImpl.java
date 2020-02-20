@@ -1,5 +1,6 @@
 package com.blog.demo.service;
 
+import com.blog.demo.dto.PaginationDTO;
 import com.blog.demo.dto.QuestionDTO;
 import com.blog.demo.mapper.QuestionMapper;
 import com.blog.demo.mapper.UserMapper;
@@ -23,10 +24,12 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public List<QuestionDTO> list() {
+    public PaginationDTO list(int page, int size) {
 
-        List<Question> questions = questionMapper.list();
+        Integer offset = size*(page-1);
+        List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
+        PaginationDTO paginationDTO = new PaginationDTO();
         for (Question q:questions
              ) {
             User user = userMapper.findById(q.getCreator());
@@ -34,8 +37,11 @@ public class QuestionServiceImpl implements QuestionService {
             BeanUtils.copyProperties(q,questionDTO);
             questionDTO.setUser(user);
             questionDTOList.add(questionDTO);
-        }
 
-        return questionDTOList;
+        }
+        paginationDTO.setQuestionDTOS(questionDTOList);
+        Integer pageTotalCount = questionMapper.count();
+        paginationDTO.setPagination(pageTotalCount,page,size);
+        return paginationDTO;
     }
 }
