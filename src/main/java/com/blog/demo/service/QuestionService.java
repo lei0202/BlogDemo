@@ -4,6 +4,6 @@ import com.blog.demo.dto.PaginationDTO;
 
 public interface QuestionService {
 
-    public PaginationDTO list(int page, int size);
+    public PaginationDTO list(Integer page, Integer size);
 
 }

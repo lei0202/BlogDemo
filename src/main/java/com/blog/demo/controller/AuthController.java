@@ -49,7 +49,7 @@ public class AuthController {
         accessTokenDTO.setClient_secret(clientSecret);
         String accessToken = githubProvider.getAccessToken(accessTokenDTO);
         GithubUser githubUser = githubProvider.getUser(accessToken);
-        if(githubUser!=null && githubUser.getId() !=null) {
+        if(githubUser!=null && githubUser.getId()!=null) {
             User user = new User();
             String token = UUID.randomUUID().toString();
             user.setToken(token);

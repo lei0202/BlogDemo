@@ -23,9 +23,19 @@ public class QuestionServiceImpl implements QuestionService {
     @SuppressWarnings("all")
     private QuestionMapper questionMapper;
 
-    @Override
-    public PaginationDTO list(int page, int size) {
 
+    @Override
+    public PaginationDTO list(Integer page, Integer size) {
+        Integer TotalCount = questionMapper.count();
+        Integer totalPage;
+        if(TotalCount%size == 0){
+            totalPage = TotalCount/size;
+        }
+        else {
+            totalPage = TotalCount/size + 1;
+        }
+        if(page<1) page = 1;
+        if(page>totalPage) page = totalPage;
         Integer offset = size*(page-1);
         List<Question> questions = questionMapper.list(offset,size);
         List<QuestionDTO> questionDTOList = new ArrayList<>();
